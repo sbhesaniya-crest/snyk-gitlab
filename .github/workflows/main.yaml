@@ -12,12 +12,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Login to GitLab Container Registry
-        uses: gitlab-container-registry/login@v1
-        with:
-          url: ${{ secrets.GITLAB_REGISTRY_URL }}
-          username: ${{ secrets.GITLAB_REGISTRY_USERNAME }}
-          password: ${{ secrets.GITLAB_REGISTRY_PASSWORD }}
+      - name: Log in to GitLab Container Registry
+        run: echo "${{ secrets.GITLAB_REGISTRY_PASSWORD }}" | docker login ${{ secrets.GITLAB_REGISTRY_URL }} -u ${{ secrets.GITLAB_REGISTRY_USERNAME }} --password-stdin
 
       - name: Build and Push Image
         uses: docker/build-push-action@v2
