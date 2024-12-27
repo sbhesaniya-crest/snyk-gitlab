@@ -20,4 +20,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.GITLAB_REGISTRY_URL }}/bitbucket_usecase/image1:latest
+          tags: ${{ secrets.GITLAB_REGISTRY_URL }}/bitbucket_usecase:latest
