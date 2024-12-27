@@ -1,4 +1,4 @@
-name: Build and Push Image
+name: Build and Push Images
 
 on:
   push:
@@ -15,7 +15,7 @@ jobs:
       - name: Log in to GitLab Container Registry
         run: echo "${{ secrets.GITLAB_REGISTRY_PASSWORD }}" | docker login ${{ secrets.GITLAB_REGISTRY_URL }} -u ${{ secrets.GITLAB_REGISTRY_USERNAME }} --password-stdin
 
-      - name: Build and Push Image with Label
+      - name: Build and Push Image 1 with Label
         uses: docker/build-push-action@v2
         with:
           context: .
@@ -23,3 +23,15 @@ jobs:
           tags: ${{ secrets.GITLAB_REGISTRY_URL }}/sandip.bhesaniya/bitbucket_usecase/image1:latest
           labels: |
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
+
+      - name: Set up Buildx Builder
+        run: |
+          docker buildx create --use --name mybuilder
+          docker buildx inspect --bootstrap
+
+      - name: Build and Push Image 2 with Provenance
+        run: |
+          docker buildx build \
+            --provenance=true \
+            -t ${{ secrets.GITLAB_REGISTRY_URL }}/sandip.bhesaniya/bitbucket_usecase/image2:latest \
+            --push .
