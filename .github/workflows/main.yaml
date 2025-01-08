@@ -20,7 +20,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.GITLAB_REGISTRY_URL }}/codeowners-test2/codeowners-test/image1:latest
+          tags: ${{ secrets.GITLAB_REGISTRY_URL }}/codeowners-test/codeowners-test2/image1:latest
           labels: |
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
 
